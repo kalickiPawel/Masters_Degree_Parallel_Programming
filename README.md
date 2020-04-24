@@ -1,0 +1,1 @@
+# Obliczenia dużej mocy - labirynt
