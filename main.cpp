@@ -7,8 +7,10 @@
 //
 
 #include <iostream>
-#include <cstdlib>
 #include <string>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctime>
 
 #define N 441
 
@@ -56,14 +58,31 @@ void drawLabirynth()
 
 void mazeSolution()
 {
+    // Selecting start point
+    int randomX = (rand() % (N / 21));
+    int randomY = (rand() % (N / 21));
+    while (world_map[randomX][randomY] == 1)
+    {
+        randomX = (rand() % (N / 21));
+        randomY = (rand() % (N / 21));
+    }
+    cout << "Start point:" << endl;
+    cout << "X: " << randomX << " Y: " << randomY << endl;
+
+    // Drawing start point
     int i, j;
-    for (i = 0; i < N / 21; i++)
-        for (j = 0; j < N / 21; j++)
-            world_map[i][j];
+    for (i = 0; i < 21; i++)
+        for (j = 0; j < 21; j++)
+        {
+            color[randomX * 21 + i][randomY * 21 + j][0] = 255;
+            color[randomX * 21 + i][randomY * 21 + j][1] = 0;
+            color[randomX * 21 + i][randomY * 21 + j][2] = 0;
+        }
 }
 
 int main(int argc, const char *argv[])
 {
+    srand((unsigned)time(0));
     FILE *fp;
     char const *filename = "labirynt.ppm";
     char const *comment = "# "; /* comment should start with # */
