@@ -19,6 +19,8 @@ using namespace std;
 
 static unsigned char color[N][N][3];
 
+int randomX, randomY;
+
 const int MAP_WIDTH = 21;
 const int MAP_HEIGHT = 21;
 
@@ -57,29 +59,40 @@ void drawLabirynth()
                     color[i][j][k] = 255;
 }
 
-int *getRandomColor()
+int getRandomColor()
 {
-    int i;
-    int color_tmp[3];
-    for (i = 0; i < 3; i++)
-        color_tmp[i] = rand() % 255;
-    return color_tmp;
+    return rand() % 256;
 }
 
-void drawing_points(int x, int y, int *color_val)
+int color_r = getRandomColor();
+int color_g = getRandomColor();
+int color_b = getRandomColor();
+
+void drawing_points(int x, int y, int color_r, int color_g, int color_b)
 {
     // Drawing points
     int i, j;
     for (i = 0; i < 21; i++)
         for (j = 0; j < 21; j++)
-            *color[x * 21 + i][y * 21 + j] = *color_val;
+        {
+            color[x * 21 + i][y * 21 + j][0] = color_r;
+            color[x * 21 + i][y * 21 + j][1] = color_g;
+            color[x * 21 + i][y * 21 + j][2] = color_b;
+        }
 }
 
-tuple<int, int> getRandomStart()
+void changeColor()
+{
+    color_r = getRandomColor();
+    color_g = getRandomColor();
+    color_b = getRandomColor();
+}
+
+void getRandomStart()
 {
     // Selecting start point
-    int randomX = (rand() % (N / 21));
-    int randomY = (rand() % (N / 21));
+    randomX = (rand() % (N / 21));
+    randomY = (rand() % (N / 21));
 
     while (world_map[randomX][randomY] == 1)
     {
@@ -87,7 +100,8 @@ tuple<int, int> getRandomStart()
         randomY = (rand() % (N / 21));
     }
 
-    return make_tuple(randomX, randomY);
+    cout << "Start point:" << endl;
+    cout << "X: " << randomX << " Y: " << randomY << endl;
 }
 
 void mazeSolution(){
@@ -103,14 +117,15 @@ int main(int argc, const char *argv[])
 
     drawLabirynth();
 
-    auto [randomX, randomY] = getRandomStart();
-    int *color_val = getRandomColor();
-    cout << "Start point:" << endl;
-    cout << "X: " << randomX << " Y: " << randomY << endl;
-    cout << color_val[0] << endl;
+    getRandomStart();
 
+    // Draw start point
+    drawing_points(randomX, randomY, color_r, color_g, color_b);
+    changeColor();
+    getRandomStart();
+    drawing_points(randomX, randomY, color_r, color_g, color_b);
+    // Maze solution
     mazeSolution();
-    drawing_points(randomX, randomY, color_val);
 
     fp = fopen(filename, "wb");
     fprintf(fp, "P6\n %s\n %d\n %d\n %d\n", comment, N, N, 255);
