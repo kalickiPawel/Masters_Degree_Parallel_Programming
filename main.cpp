@@ -141,6 +141,27 @@ void mazeSolution()
     cout << "Dol sciana: " << down << endl;
     cout << "Prawa sciana: " << right << endl;
     cout << "Lewa sciana: " << left << endl;
+    int ilosc = !up + !down + !right + !left;
+    cout << "Ile korytarzy?: " << ilosc << endl;
+
+    switch (ilosc)
+    {
+    case 0:
+        cout << ilosc << endl;
+        break;
+    case 1:
+        cout << ilosc << endl;
+        break;
+    case 2:
+        cout << ilosc << endl;
+        break;
+    case 3:
+        cout << ilosc << endl;
+        break;
+    case 4:
+        cout << ilosc << endl;
+        break;
+    }
 }
 
 int main(int argc, const char *argv[])
