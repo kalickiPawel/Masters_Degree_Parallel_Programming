@@ -103,31 +103,19 @@ void getRandomStart()
 
 bool checkUp(int x, int y)
 {
-    if (world_map[x][y - 1] == 1)
-        return true; // If wall return True
-    else
-        return false;
+    return (world_map[x][y - 1] == 1);
 }
 bool checkDown(int x, int y)
 {
-    if (world_map[x][y + 1] == 1)
-        return true; // If wall return True
-    else
-        return false;
+    return (world_map[x][y + 1] == 1);
 }
 bool checkRight(int x, int y)
 {
-    if (world_map[x + 1][y] == 1)
-        return true; // If wall return True
-    else
-        return false;
+    return (world_map[x + 1][y] == 1);
 }
 bool checkLeft(int x, int y)
 {
-    if (world_map[x - 1][y] == 1)
-        return true; // If wall return True
-    else
-        return false;
+    return (world_map[x - 1][y] == 1);
 }
 
 void mazeSolution()
@@ -137,29 +125,25 @@ void mazeSolution()
     bool down = checkDown(randomX, randomY);
     bool right = checkRight(randomX, randomY);
     bool left = checkLeft(randomX, randomY);
-    cout << "Gora sciana: " << up << endl;
-    cout << "Dol sciana: " << down << endl;
-    cout << "Prawa sciana: " << right << endl;
-    cout << "Lewa sciana: " << left << endl;
     int ilosc = !up + !down + !right + !left;
     cout << "Ile korytarzy?: " << ilosc << endl;
 
     switch (ilosc)
     {
     case 0:
-        cout << ilosc << endl;
+        cout << "In case: " << ilosc << endl;
         break;
     case 1:
-        cout << ilosc << endl;
+        cout << "In case: " << ilosc << endl;
         break;
     case 2:
-        cout << ilosc << endl;
+        cout << "In case: " << ilosc << endl;
         break;
     case 3:
-        cout << ilosc << endl;
+        cout << "In case: " << ilosc << endl;
         break;
     case 4:
-        cout << ilosc << endl;
+        cout << "In case: " << ilosc << endl;
         break;
     }
 }
