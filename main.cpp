@@ -19,6 +19,10 @@ using namespace std;
 
 static unsigned char color[N][N][3];
 
+int color_r = rand() % 256;
+int color_g = rand() % 256;
+int color_b = rand() % 256;
+
 int randomX, randomY;
 
 const int MAP_WIDTH = 21;
@@ -64,10 +68,6 @@ int getRandomColor()
     return rand() % 256;
 }
 
-int color_r = getRandomColor();
-int color_g = getRandomColor();
-int color_b = getRandomColor();
-
 void drawing_points(int x, int y, int color_r, int color_g, int color_b)
 {
     // Drawing points
@@ -83,9 +83,9 @@ void drawing_points(int x, int y, int color_r, int color_g, int color_b)
 
 void changeColor()
 {
-    color_r = getRandomColor();
-    color_g = getRandomColor();
-    color_b = getRandomColor();
+    color_r = rand() % 256;
+    color_g = rand() % 256;
+    color_b = rand() % 256;
 }
 
 void getRandomStart()
@@ -99,14 +99,49 @@ void getRandomStart()
         randomX = (rand() % (N / 21));
         randomY = (rand() % (N / 21));
     }
-
-    cout << "Start point:" << endl;
-    cout << "X: " << randomX << " Y: " << randomY << endl;
 }
 
-void mazeSolution(){
+bool checkUp(int x, int y)
+{
+    if (world_map[x][y - 1] == 1)
+        return true; // If wall return True
+    else
+        return false;
+}
+bool checkDown(int x, int y)
+{
+    if (world_map[x][y + 1] == 1)
+        return true; // If wall return True
+    else
+        return false;
+}
+bool checkRight(int x, int y)
+{
+    if (world_map[x + 1][y] == 1)
+        return true; // If wall return True
+    else
+        return false;
+}
+bool checkLeft(int x, int y)
+{
+    if (world_map[x - 1][y] == 1)
+        return true; // If wall return True
+    else
+        return false;
+}
 
-};
+void mazeSolution()
+{
+    cout << "X: " << randomX << " Y: " << randomY << endl;
+    bool up = checkUp(randomX, randomY);
+    bool down = checkDown(randomX, randomY);
+    bool right = checkRight(randomX, randomY);
+    bool left = checkLeft(randomX, randomY);
+    cout << "Gora sciana: " << up << endl;
+    cout << "Dol sciana: " << down << endl;
+    cout << "Prawa sciana: " << right << endl;
+    cout << "Lewa sciana: " << left << endl;
+}
 
 int main(int argc, const char *argv[])
 {
@@ -121,9 +156,7 @@ int main(int argc, const char *argv[])
 
     // Draw start point
     drawing_points(randomX, randomY, color_r, color_g, color_b);
-    changeColor();
-    getRandomStart();
-    drawing_points(randomX, randomY, color_r, color_g, color_b);
+
     // Maze solution
     mazeSolution();
 
