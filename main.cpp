@@ -123,6 +123,7 @@ bool checkDown(int x, int y)
 void mazeSolution()
 {
     cout << "X: " << randomX << " Y: " << randomY << endl;
+
     bool up = checkUp(randomX, randomY);
     cout << "Sciana gora: " << up << endl;
     bool down = checkDown(randomX, randomY);
@@ -135,65 +136,81 @@ void mazeSolution()
     int tmpX = randomX;
     int tmpY = randomY;
     cout << tmpX << tmpY << endl;
-    int checking_value;
-    if (up != true)
-    {
-        checking_value = 0;
-    }
-    if (down != true)
-    {
-        checking_value = 1;
-    }
-    if (right != true)
-    {
-        checking_value = 2;
-    }
-    if (left != true)
-    {
-        checking_value = 3;
-    }
-
     cout << "Ile korytarzy?: " << ilosc << endl;
     while (ilosc != 0)
     {
+        bool up = checkUp(tmpX, tmpY);
+        cout << "Sciana gora: " << up << endl;
+        bool down = checkDown(tmpX, tmpY);
+        cout << "Sciana dol: " << down << endl;
+        bool right = checkRight(tmpX, tmpY);
+        cout << "Sciana prawo: " << right << endl;
+        bool left = checkLeft(tmpX, tmpY);
+        cout << "Sciana lewo: " << left << endl;
+        ilosc = !up + !down + !right + !left;
+        int checking_value;
+        if (up != true)
+        {
+            checking_value = 0;
+        }
+        if (down != true)
+        {
+            checking_value = 1;
+        }
+        if (right != true)
+        {
+            checking_value = 2;
+        }
+        if (left != true)
+        {
+            checking_value = 3;
+        }
+        cout << "Ile korytarzy?: " << ilosc << endl;
+        cout << "Checking value: " << checking_value << endl;
         switch (ilosc)
         {
         case 0:
             cout << "In case: " << ilosc << endl;
+            drawing_points(tmpX, tmpY, color_r, color_g, color_b);
             ilosc = 0;
             break;
         case 1:
             cout << checking_value << endl;
             if (checking_value == 0)
             {
+                world_map[tmpX][tmpY] = 1;
                 tmpX += 1;
             }
             if (checking_value == 1)
             {
+                world_map[tmpX][tmpY] = 1;
                 tmpX -= 1;
             }
             if (checking_value == 2)
             {
+                world_map[tmpX][tmpY] = 1;
                 tmpY += 1;
             }
             if (checking_value == 3)
             {
+                world_map[tmpX][tmpY] = 1;
                 tmpY -= 1;
             }
             drawing_points(tmpX, tmpY, color_r, color_g, color_b);
-
-            ilosc = 0;
             break;
         case 2:
             cout << "In case: " << ilosc << endl;
+            drawing_points(tmpX, tmpY, color_r, color_g, color_b);
             ilosc = 0;
             break;
         case 3:
             cout << "In case: " << ilosc << endl;
+            drawing_points(tmpX, tmpY, color_r, color_g, color_b);
             ilosc = 0;
             break;
         case 4:
             cout << "In case: " << ilosc << endl;
+            drawing_points(tmpX, tmpY, color_r, color_g, color_b);
             ilosc = 0;
             break;
         }
