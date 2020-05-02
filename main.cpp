@@ -59,8 +59,10 @@ void drawLabirynth()
     for (i = 0; i <= N; i++)
         for (j = 0; j <= N; j++)
             for (k = 0; k < 3; k++)
+            {
                 if (world_map[i / 21][j / 21] == 9)
                     color[i][j][k] = 255;
+            }
 }
 
 int getRandomColor()
@@ -101,19 +103,19 @@ void getRandomStart()
     }
 }
 
-bool checkUp(int x, int y)
+bool checkLeft(int x, int y)
 {
     return (world_map[x][y - 1] == 1);
 }
-bool checkDown(int x, int y)
+bool checkRight(int x, int y)
 {
     return (world_map[x][y + 1] == 1);
 }
-bool checkRight(int x, int y)
+bool checkUp(int x, int y)
 {
     return (world_map[x + 1][y] == 1);
 }
-bool checkLeft(int x, int y)
+bool checkDown(int x, int y)
 {
     return (world_map[x - 1][y] == 1);
 }
@@ -122,29 +124,79 @@ void mazeSolution()
 {
     cout << "X: " << randomX << " Y: " << randomY << endl;
     bool up = checkUp(randomX, randomY);
+    cout << "Sciana gora: " << up << endl;
     bool down = checkDown(randomX, randomY);
+    cout << "Sciana dol: " << down << endl;
     bool right = checkRight(randomX, randomY);
+    cout << "Sciana prawo: " << right << endl;
     bool left = checkLeft(randomX, randomY);
+    cout << "Sciana lewo: " << left << endl;
     int ilosc = !up + !down + !right + !left;
-    cout << "Ile korytarzy?: " << ilosc << endl;
-
-    switch (ilosc)
+    int tmpX = randomX;
+    int tmpY = randomY;
+    cout << tmpX << tmpY << endl;
+    int checking_value;
+    if (up != true)
     {
-    case 0:
-        cout << "In case: " << ilosc << endl;
-        break;
-    case 1:
-        cout << "In case: " << ilosc << endl;
-        break;
-    case 2:
-        cout << "In case: " << ilosc << endl;
-        break;
-    case 3:
-        cout << "In case: " << ilosc << endl;
-        break;
-    case 4:
-        cout << "In case: " << ilosc << endl;
-        break;
+        checking_value = 0;
+    }
+    if (down != true)
+    {
+        checking_value = 1;
+    }
+    if (right != true)
+    {
+        checking_value = 2;
+    }
+    if (left != true)
+    {
+        checking_value = 3;
+    }
+
+    cout << "Ile korytarzy?: " << ilosc << endl;
+    while (ilosc != 0)
+    {
+        switch (ilosc)
+        {
+        case 0:
+            cout << "In case: " << ilosc << endl;
+            ilosc = 0;
+            break;
+        case 1:
+            cout << checking_value << endl;
+            if (checking_value == 0)
+            {
+                tmpX += 1;
+            }
+            if (checking_value == 1)
+            {
+                tmpX -= 1;
+            }
+            if (checking_value == 2)
+            {
+                tmpY += 1;
+            }
+            if (checking_value == 3)
+            {
+                tmpY -= 1;
+            }
+            drawing_points(tmpX, tmpY, color_r, color_g, color_b);
+
+            ilosc = 0;
+            break;
+        case 2:
+            cout << "In case: " << ilosc << endl;
+            ilosc = 0;
+            break;
+        case 3:
+            cout << "In case: " << ilosc << endl;
+            ilosc = 0;
+            break;
+        case 4:
+            cout << "In case: " << ilosc << endl;
+            ilosc = 0;
+            break;
+        }
     }
 }
 
