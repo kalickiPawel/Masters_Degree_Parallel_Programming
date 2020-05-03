@@ -124,6 +124,9 @@ void mazeSolution()
 {
     cout << "X: " << randomX << " Y: " << randomY << endl;
 
+    int tmpX = randomX;
+    int tmpY = randomY;
+
     bool up = checkUp(randomX, randomY);
     cout << "Sciana gora: " << up << endl;
     bool down = checkDown(randomX, randomY);
@@ -132,11 +135,10 @@ void mazeSolution()
     cout << "Sciana prawo: " << right << endl;
     bool left = checkLeft(randomX, randomY);
     cout << "Sciana lewo: " << left << endl;
+
     int ilosc = !up + !down + !right + !left;
-    int tmpX = randomX;
-    int tmpY = randomY;
-    cout << tmpX << tmpY << endl;
     cout << "Ile korytarzy?: " << ilosc << endl;
+
     while (ilosc != 0)
     {
         bool up = checkUp(tmpX, tmpY);
@@ -148,25 +150,7 @@ void mazeSolution()
         bool left = checkLeft(tmpX, tmpY);
         cout << "Sciana lewo: " << left << endl;
         ilosc = !up + !down + !right + !left;
-        int checking_value;
-        if (up != true)
-        {
-            checking_value = 0;
-        }
-        if (down != true)
-        {
-            checking_value = 1;
-        }
-        if (right != true)
-        {
-            checking_value = 2;
-        }
-        if (left != true)
-        {
-            checking_value = 3;
-        }
         cout << "Ile korytarzy?: " << ilosc << endl;
-        cout << "Checking value: " << checking_value << endl;
         switch (ilosc)
         {
         case 0:
@@ -175,24 +159,27 @@ void mazeSolution()
             ilosc = 0;
             break;
         case 1:
-            cout << checking_value << endl;
-            if (checking_value == 0)
+            if (up != true)
             {
+                cout << "Korytarz gora" << endl;
                 world_map[tmpX][tmpY] = 1;
                 tmpX += 1;
             }
-            if (checking_value == 1)
+            if (down != true)
             {
+                cout << "Korytarz dol" << endl;
                 world_map[tmpX][tmpY] = 1;
                 tmpX -= 1;
             }
-            if (checking_value == 2)
+            if (right != true)
             {
+                cout << "Korytarz prawo" << endl;
                 world_map[tmpX][tmpY] = 1;
                 tmpY += 1;
             }
-            if (checking_value == 3)
+            if (left != true)
             {
+                cout << "Korytarz lewo" << endl;
                 world_map[tmpX][tmpY] = 1;
                 tmpY -= 1;
             }
