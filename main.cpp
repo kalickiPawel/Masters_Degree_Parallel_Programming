@@ -127,17 +127,28 @@ void mazeSolution()
     int tmpX = randomX;
     int tmpY = randomY;
 
-    bool up = checkUp(randomX, randomY);
-    cout << "Sciana gora: " << up << endl;
-    bool down = checkDown(randomX, randomY);
-    cout << "Sciana dol: " << down << endl;
-    bool right = checkRight(randomX, randomY);
-    cout << "Sciana prawo: " << right << endl;
-    bool left = checkLeft(randomX, randomY);
-    cout << "Sciana lewo: " << left << endl;
+    int ilosc;
+    int wybor;
 
-    int ilosc = !up + !down + !right + !left;
-    cout << "Ile korytarzy?: " << ilosc << endl;
+    int color_r3 = color_r;
+    int color_g3 = color_g;
+    int color_b3 = color_b;
+    changeColor();
+
+    int color_r2 = color_r;
+    int color_g2 = color_g;
+    int color_b2 = color_b;
+    changeColor();
+
+    int color_r1 = color_r;
+    int color_g1 = color_g;
+    int color_b1 = color_b;
+    changeColor();
+
+    int color_r0 = color_r;
+    int color_g0 = color_g;
+    int color_b0 = color_b;
+    changeColor();
 
     while (ilosc != 0)
     {
@@ -183,12 +194,54 @@ void mazeSolution()
                 world_map[tmpX][tmpY] = 1;
                 tmpY -= 1;
             }
-            drawing_points(tmpX, tmpY, color_r, color_g, color_b);
+            drawing_points(tmpX, tmpY, color_r0, color_g0, color_b0);
             break;
         case 2:
             cout << "In case: " << ilosc << endl;
-            drawing_points(tmpX, tmpY, color_r, color_g, color_b);
-            ilosc = 0;
+            wybor = rand() % 1;
+            if (up != true)
+            {
+                cout << "Korytarz gora" << endl;
+                world_map[tmpX][tmpY] = 1;
+
+                if (wybor == 0)
+                    drawing_points(tmpX, tmpY, color_r, color_g, color_b);
+                else
+                    drawing_points(tmpX, tmpY, color_r0, color_g0, color_b0);
+                tmpX += 1;
+            }
+            if (down != true)
+            {
+                cout << "Korytarz dol" << endl;
+                world_map[tmpX][tmpY] = 1;
+
+                if (wybor == 0)
+                    drawing_points(tmpX, tmpY, color_r, color_g, color_b);
+                else
+                    drawing_points(tmpX, tmpY, color_r0, color_g0, color_b0);
+                tmpX -= 1;
+            }
+            if (right != true)
+            {
+                cout << "Korytarz prawo" << endl;
+                world_map[tmpX][tmpY] = 1;
+                if (wybor == 0)
+                    drawing_points(tmpX, tmpY, color_r, color_g, color_b);
+                else
+                    drawing_points(tmpX, tmpY, color_r0, color_g0, color_b0);
+                tmpY += 1;
+            }
+            if (left != true)
+            {
+                cout << "Korytarz lewo" << endl;
+                world_map[tmpX][tmpY] = 1;
+
+                if (wybor == 0)
+                    drawing_points(tmpX, tmpY, color_r, color_g, color_b);
+                else
+                    drawing_points(tmpX, tmpY, color_r0, color_g0, color_b0);
+                tmpY -= 1;
+            }
             break;
         case 3:
             cout << "In case: " << ilosc << endl;
