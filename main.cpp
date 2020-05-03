@@ -203,44 +203,41 @@ void mazeSolution()
             {
                 cout << "Korytarz gora" << endl;
                 world_map[tmpX][tmpY] = 1;
-
+                tmpX += 1;
                 if (wybor == 0)
                     drawing_points(tmpX, tmpY, color_r, color_g, color_b);
                 else
                     drawing_points(tmpX, tmpY, color_r0, color_g0, color_b0);
-                tmpX += 1;
             }
             if (down != true)
             {
                 cout << "Korytarz dol" << endl;
                 world_map[tmpX][tmpY] = 1;
-
+                tmpX -= 1;
                 if (wybor == 0)
                     drawing_points(tmpX, tmpY, color_r, color_g, color_b);
                 else
                     drawing_points(tmpX, tmpY, color_r0, color_g0, color_b0);
-                tmpX -= 1;
             }
             if (right != true)
             {
                 cout << "Korytarz prawo" << endl;
                 world_map[tmpX][tmpY] = 1;
+                tmpY += 1;
                 if (wybor == 0)
                     drawing_points(tmpX, tmpY, color_r, color_g, color_b);
                 else
                     drawing_points(tmpX, tmpY, color_r0, color_g0, color_b0);
-                tmpY += 1;
             }
             if (left != true)
             {
                 cout << "Korytarz lewo" << endl;
                 world_map[tmpX][tmpY] = 1;
-
+                tmpY -= 1;
                 if (wybor == 0)
                     drawing_points(tmpX, tmpY, color_r, color_g, color_b);
                 else
                     drawing_points(tmpX, tmpY, color_r0, color_g0, color_b0);
-                tmpY -= 1;
             }
             break;
         case 3:
