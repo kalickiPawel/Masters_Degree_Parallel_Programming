@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctime>
+#include <vector>
 
 #define N 441
 
@@ -176,52 +177,75 @@ void mazeSolution(int tmpX, int tmpY)
             if (up != true)
             {
                 cout << "Korytarz gora" << endl;
-                world_map[tmpX][tmpY] = 1;
+                if (wybor == 0)
+                {
+                    world_map[tmpX][tmpY] = 1;
+                    drawing_points(tmpX, tmpY, color_r, color_g, color_b);
+                }
                 if (wybor == 1)
                 {
                     changeColor();
+                    world_map[tmpX + 1][tmpY] = 1;
                     mazeSolution(tmpX + 1, tmpY);
+                    drawing_points(tmpX + 1, tmpY, color_r, color_g, color_b);
                 }
-                drawing_points(tmpX + 1, tmpY, color_r, color_g, color_b);
                 wybor += 1;
                 tmpX0 = tmpX + 1;
             }
             if (down != true)
             {
                 cout << "Korytarz dol" << endl;
-                world_map[tmpX][tmpY] = 1;
+                if (wybor == 0)
+                {
+                    world_map[tmpX][tmpY] = 1;
+                    drawing_points(tmpX, tmpY, color_r, color_g, color_b);
+                }
+
                 if (wybor == 1)
                 {
                     changeColor();
+                    world_map[tmpX - 1][tmpY] = 1;
                     mazeSolution(tmpX - 1, tmpY);
+                    drawing_points(tmpX - 1, tmpY, color_r, color_g, color_b);
                 }
-                drawing_points(tmpX - 1, tmpY, color_r, color_g, color_b);
                 wybor += 1;
                 tmpX0 = tmpX - 1;
             }
             if (right != true)
             {
                 cout << "Korytarz prawo" << endl;
-                world_map[tmpX][tmpY] = 1;
+
+                if (wybor == 0)
+                {
+                    world_map[tmpX][tmpY] = 1;
+                    drawing_points(tmpX, tmpY, color_r, color_g, color_b);
+                }
                 if (wybor == 1)
                 {
                     changeColor();
+                    world_map[tmpX][tmpY + 1] = 1;
                     mazeSolution(tmpX, tmpY + 1);
+                    drawing_points(tmpX, tmpY + 1, color_r, color_g, color_b);
                 }
-                drawing_points(tmpX, tmpY + 1, color_r, color_g, color_b);
+
                 wybor += 1;
                 tmpY0 = tmpY + 1;
             }
             if (left != true)
             {
                 cout << "Korytarz lewo" << endl;
-                world_map[tmpX][tmpY] = 1;
+                if (wybor == 0)
+                {
+                    world_map[tmpX][tmpY] = 1;
+                    drawing_points(tmpX, tmpY, color_r, color_g, color_b);
+                }
                 if (wybor == 1)
                 {
                     changeColor();
+                    world_map[tmpX][tmpY - 1] = 1;
                     mazeSolution(tmpX, tmpY - 1);
+                    drawing_points(tmpX, tmpY - 1, color_r, color_g, color_b);
                 }
-                drawing_points(tmpX, tmpY - 1, color_r, color_g, color_b);
                 wybor += 1;
                 tmpY0 = tmpY - 1;
             }
