@@ -149,12 +149,12 @@ void mazeSolution(int tmpX, int tmpY)
             tmpX0 = tmpX + 1;
             tmpY0 = tmpY;
         }
-        if (left != true)
+        if (right != true)
         {
             tmpX0 = tmpX;
             tmpY0 = tmpY - 1;
         }
-        if (right != true)
+        if (left != true)
         {
             tmpX0 = tmpX;
             tmpY0 = tmpY + 1;
@@ -209,7 +209,7 @@ void mazeSolution(int tmpX, int tmpY)
                 else
                 {
                     world_map[tmpX0][tmpY0] = 1;
-                    cout << "Tu rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
+                    cout << "Tu GORA rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
                     drawing_points(tmpX0, tmpY0, 255, 0, 0);
                 }
                 wybor += 1;
@@ -227,7 +227,7 @@ void mazeSolution(int tmpX, int tmpY)
                 else
                 {
                     world_map[tmpX0][tmpY0] = 1;
-                    cout << "Tu dol rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
+                    cout << "Tu DOL rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
                     drawing_points(tmpX0, tmpY0, 255, 0, 0);
                 }
                 wybor += 1;
@@ -245,7 +245,8 @@ void mazeSolution(int tmpX, int tmpY)
                 else
                 {
                     world_map[tmpX0][tmpY0] = 1;
-                    cout << "Tu prawe rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
+                    tmpY0 += 2;
+                    cout << "Tu PRAWO rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
                     drawing_points(tmpX0, tmpY0, 255, 0, 0);
                 }
                 wybor += 1;
@@ -263,7 +264,8 @@ void mazeSolution(int tmpX, int tmpY)
                 else
                 {
                     world_map[tmpX0][tmpY0] = 1;
-                    cout << "Tu rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
+                    tmpY0 -= 2;
+                    cout << "Tu LEWO rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
                     drawing_points(tmpX0, tmpY0, 255, 0, 0);
                 }
                 wybor += 1;
@@ -281,6 +283,12 @@ void mazeSolution(int tmpX, int tmpY)
                     tmpX -= 1;
                     drawing_points(tmpX, tmpY, color_r, color_g, color_b);
                 }
+                else
+                {
+                    world_map[tmpX0][tmpY0] = 1;
+                    cout << "Tu GORA rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
+                    drawing_points(tmpX0, tmpY0, 255, 0, 0);
+                }
                 wybor += 1;
             }
             if (down != true)
@@ -292,6 +300,12 @@ void mazeSolution(int tmpX, int tmpY)
                     cout << "Ide dol" << endl;
                     tmpX += 1;
                     drawing_points(tmpX, tmpY, color_r, color_g, color_b);
+                }
+                else
+                {
+                    world_map[tmpX0][tmpY0] = 1;
+                    cout << "Tu DOL rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
+                    drawing_points(tmpX0, tmpY0, 255, 0, 0);
                 }
                 wybor += 1;
             }
@@ -305,6 +319,13 @@ void mazeSolution(int tmpX, int tmpY)
                     tmpY += 1;
                     drawing_points(tmpX, tmpY, color_r, color_g, color_b);
                 }
+                else
+                {
+                    world_map[tmpX0][tmpY0] = 1;
+                    tmpY0 += 2;
+                    cout << "Tu PRAWO rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
+                    drawing_points(tmpX0, tmpY0, 255, 0, 0);
+                }
                 wybor += 1;
             }
             if (left != true)
@@ -317,13 +338,92 @@ void mazeSolution(int tmpX, int tmpY)
                     tmpY -= 1;
                     drawing_points(tmpX, tmpY, color_r, color_g, color_b);
                 }
+                else
+                {
+                    world_map[tmpX0][tmpY0] = 1;
+                    tmpY0 -= 2;
+                    cout << "Tu LEWO rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
+                    drawing_points(tmpX0, tmpY0, 255, 0, 0);
+                }
                 wybor += 1;
             }
             break;
         case 4:
-            cout << "In case: " << ilosc << endl;
-            drawing_points(tmpX, tmpY, color_r, color_g, color_b);
-            ilosc = 0;
+            wybor = 0;
+            if (up != true)
+            {
+                cout << "Korytarz gora" << endl;
+                world_map[tmpX][tmpY] = 1;
+                if (wybor == 0)
+                {
+                    cout << "Ide gora" << endl;
+                    tmpX -= 1;
+                    drawing_points(tmpX, tmpY, color_r, color_g, color_b);
+                }
+                else
+                {
+                    world_map[tmpX0][tmpY0] = 1;
+                    cout << "Tu GORA rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
+                    drawing_points(tmpX0, tmpY0, 255, 0, 0);
+                }
+                wybor += 1;
+            }
+            if (down != true)
+            {
+                cout << "Korytarz dol" << endl;
+                world_map[tmpX][tmpY] = 1;
+                if (wybor == 0)
+                {
+                    cout << "Ide dol" << endl;
+                    tmpX += 1;
+                    drawing_points(tmpX, tmpY, color_r, color_g, color_b);
+                }
+                else
+                {
+                    world_map[tmpX0][tmpY0] = 1;
+                    cout << "Tu DOL rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
+                    drawing_points(tmpX0, tmpY0, 255, 0, 0);
+                }
+                wybor += 1;
+            }
+            if (right != true)
+            {
+                cout << "Korytarz prawo" << endl;
+                world_map[tmpX][tmpY] = 1;
+                if (wybor == 0)
+                {
+                    cout << "Ide prawo" << endl;
+                    tmpY += 1;
+                    drawing_points(tmpX, tmpY, color_r, color_g, color_b);
+                }
+                else
+                {
+                    world_map[tmpX0][tmpY0] = 1;
+                    tmpY0 += 2;
+                    cout << "Tu PRAWO rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
+                    drawing_points(tmpX0, tmpY0, 255, 0, 0);
+                }
+                wybor += 1;
+            }
+            if (left != true)
+            {
+                cout << "Korytarz lewo" << endl;
+                world_map[tmpX][tmpY] = 1;
+                if (wybor == 0)
+                {
+                    cout << "Ide lewo" << endl;
+                    tmpY -= 1;
+                    drawing_points(tmpX, tmpY, color_r, color_g, color_b);
+                }
+                else
+                {
+                    world_map[tmpX0][tmpY0] = 1;
+                    tmpY0 -= 2;
+                    cout << "Tu LEWO rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
+                    drawing_points(tmpX0, tmpY0, 255, 0, 0);
+                }
+                wybor += 1;
+            }
             break;
         }
     }
@@ -341,7 +441,8 @@ int main(int argc, const char *argv[])
     getRandomStart();
 
     // Maze solution
-
+    // randomX = 12;
+    // randomY = 9;
     mazeSolution(randomX, randomY);
 
     fp = fopen(filename, "wb");
