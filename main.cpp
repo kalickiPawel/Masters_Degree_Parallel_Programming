@@ -59,10 +59,8 @@ void drawLabirynth()
     for (i = 0; i <= N; i++)
         for (j = 0; j <= N; j++)
             for (k = 0; k < 3; k++)
-            {
                 if (world_map[i / 21][j / 21] == 9)
                     color[i][j][k] = 255;
-            }
 }
 
 int getRandomColor()
@@ -93,14 +91,11 @@ void changeColor()
 void getRandomStart()
 {
     // Selecting start point
-    randomX = (rand() % (N / 21));
-    randomY = (rand() % (N / 21));
-
-    while (world_map[randomX][randomY] == 1)
+    do 
     {
         randomX = (rand() % (N / 21));
         randomY = (rand() % (N / 21));
-    }
+    }while(world_map[randomX][randomY] == 1);
 }
 
 bool checkLeft(int x, int y)
