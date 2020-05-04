@@ -120,35 +120,15 @@ bool checkDown(int x, int y)
     return (world_map[x - 1][y] == 1);
 }
 
-void mazeSolution()
+void mazeSolution(int tmpX, int tmpY)
 {
-    cout << "X: " << randomX << " Y: " << randomY << endl;
-
-    int tmpX = randomX;
-    int tmpY = randomY;
+    cout << "X: " << tmpX << " Y: " << tmpY << endl;
 
     int ilosc;
     int wybor;
 
-    int color_r3 = color_r;
-    int color_g3 = color_g;
-    int color_b3 = color_b;
-    changeColor();
-
-    int color_r2 = color_r;
-    int color_g2 = color_g;
-    int color_b2 = color_b;
-    changeColor();
-
-    int color_r1 = color_r;
-    int color_g1 = color_g;
-    int color_b1 = color_b;
-    changeColor();
-
-    int color_r0 = color_r;
-    int color_g0 = color_g;
-    int color_b0 = color_b;
-    changeColor();
+    int tmpX0 = tmpX;
+    int tmpY0 = tmpY;
 
     while (ilosc != 0)
     {
@@ -194,51 +174,66 @@ void mazeSolution()
                 world_map[tmpX][tmpY] = 1;
                 tmpY -= 1;
             }
-            drawing_points(tmpX, tmpY, color_r0, color_g0, color_b0);
+            drawing_points(tmpX, tmpY, color_r, color_g, color_b);
             break;
         case 2:
             cout << "In case: " << ilosc << endl;
-            wybor = rand() % 1;
+            wybor = 0;
             if (up != true)
             {
                 cout << "Korytarz gora" << endl;
                 world_map[tmpX][tmpY] = 1;
-                tmpX += 1;
-                if (wybor == 0)
-                    drawing_points(tmpX, tmpY, color_r, color_g, color_b);
-                else
-                    drawing_points(tmpX, tmpY, color_r0, color_g0, color_b0);
+                if (wybor == 1)
+                {
+                    changeColor();
+                    mazeSolution(tmpX + 1, tmpY);
+                }
+                drawing_points(tmpX + 1, tmpY, color_r, color_g, color_b);
+                wybor += 1;
+                tmpX0 = tmpX + 1;
             }
             if (down != true)
             {
                 cout << "Korytarz dol" << endl;
                 world_map[tmpX][tmpY] = 1;
-                tmpX -= 1;
-                if (wybor == 0)
-                    drawing_points(tmpX, tmpY, color_r, color_g, color_b);
-                else
-                    drawing_points(tmpX, tmpY, color_r0, color_g0, color_b0);
+                if (wybor == 1)
+                {
+                    changeColor();
+                    mazeSolution(tmpX - 1, tmpY);
+                }
+                drawing_points(tmpX - 1, tmpY, color_r, color_g, color_b);
+                wybor += 1;
+                tmpX0 = tmpX - 1;
             }
             if (right != true)
             {
                 cout << "Korytarz prawo" << endl;
                 world_map[tmpX][tmpY] = 1;
-                tmpY += 1;
-                if (wybor == 0)
-                    drawing_points(tmpX, tmpY, color_r, color_g, color_b);
-                else
-                    drawing_points(tmpX, tmpY, color_r0, color_g0, color_b0);
+                if (wybor == 1)
+                {
+                    changeColor();
+                    mazeSolution(tmpX, tmpY + 1);
+                }
+                drawing_points(tmpX, tmpY + 1, color_r, color_g, color_b);
+                wybor += 1;
+                tmpY0 = tmpY + 1;
             }
             if (left != true)
             {
                 cout << "Korytarz lewo" << endl;
                 world_map[tmpX][tmpY] = 1;
-                tmpY -= 1;
-                if (wybor == 0)
-                    drawing_points(tmpX, tmpY, color_r, color_g, color_b);
-                else
-                    drawing_points(tmpX, tmpY, color_r0, color_g0, color_b0);
+                if (wybor == 1)
+                {
+                    changeColor();
+                    mazeSolution(tmpX, tmpY - 1);
+                }
+                drawing_points(tmpX, tmpY - 1, color_r, color_g, color_b);
+                wybor += 1;
+                tmpY0 = tmpY - 1;
             }
+            /* drawing_points(tmpX, tmpY, color_r, color_g, color_b); */
+            tmpX = tmpX0;
+            tmpY = tmpY0;
             break;
         case 3:
             cout << "In case: " << ilosc << endl;
@@ -269,7 +264,7 @@ int main(int argc, const char *argv[])
     drawing_points(randomX, randomY, color_r, color_g, color_b);
 
     // Maze solution
-    mazeSolution();
+    mazeSolution(randomX, randomY);
 
     fp = fopen(filename, "wb");
     fprintf(fp, "P6\n %s\n %d\n %d\n %d\n", comment, N, N, 255);
