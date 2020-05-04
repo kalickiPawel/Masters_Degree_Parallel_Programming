@@ -138,6 +138,28 @@ void mazeSolution(int tmpX, int tmpY)
         cout << "Sciana lewo: " << left << endl;
         ilosc = !up + !down + !right + !left;
         cout << "Ile korytarzy?: " << ilosc << endl;
+
+        if (up != true)
+        {
+            tmpX0 = tmpX - 1;
+            tmpY0 = tmpY;
+        }
+        if (down != true)
+        {
+            tmpX0 = tmpX + 1;
+            tmpY0 = tmpY;
+        }
+        if (left != true)
+        {
+            tmpX0 = tmpX;
+            tmpY0 = tmpY - 1;
+        }
+        if (right != true)
+        {
+            tmpX0 = tmpX;
+            tmpY0 = tmpY + 1;
+        }
+
         switch (ilosc)
         {
         case 0:
@@ -181,14 +203,11 @@ void mazeSolution(int tmpX, int tmpY)
                 if (wybor == 0)
                 {
                     cout << "Ide gora" << endl;
-                    tmpX0 -= 1;
                     tmpX -= 1;
                     drawing_points(tmpX, tmpY, color_r, color_g, color_b);
                 }
                 else
                 {
-                    tmpX0 = tmpX + 1;
-                    tmpY0 = tmpY + 1;
                     world_map[tmpX0][tmpY0] = 1;
                     cout << "Tu rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
                     drawing_points(tmpX0, tmpY0, 255, 0, 0);
@@ -207,8 +226,6 @@ void mazeSolution(int tmpX, int tmpY)
                 }
                 else
                 {
-                    tmpX0 = tmpX + 2;
-                    tmpY0 = tmpY;
                     world_map[tmpX0][tmpY0] = 1;
                     cout << "Tu dol rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
                     drawing_points(tmpX0, tmpY0, 255, 0, 0);
@@ -227,8 +244,6 @@ void mazeSolution(int tmpX, int tmpY)
                 }
                 else
                 {
-                    tmpX0 = tmpX - 1;
-                    tmpY0 = tmpY + 1;
                     world_map[tmpX0][tmpY0] = 1;
                     cout << "Tu prawe rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
                     drawing_points(tmpX0, tmpY0, 255, 0, 0);
@@ -247,8 +262,6 @@ void mazeSolution(int tmpX, int tmpY)
                 }
                 else
                 {
-                    tmpX0 = tmpX;
-                    tmpY0 = tmpY;
                     world_map[tmpX0][tmpY0] = 1;
                     cout << "Tu rozwidlenie X: " << tmpX0 << "Y: " << tmpY0 << endl;
                     drawing_points(tmpX0, tmpY0, 255, 0, 0);
@@ -328,8 +341,7 @@ int main(int argc, const char *argv[])
     getRandomStart();
 
     // Maze solution
-    // randomX = 7;
-    // randomY = 1;
+
     mazeSolution(randomX, randomY);
 
     fp = fopen(filename, "wb");
