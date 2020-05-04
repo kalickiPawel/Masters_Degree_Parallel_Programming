@@ -11,7 +11,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctime>
-#include <tuple>
 
 #define N 441
 
@@ -91,11 +90,11 @@ void changeColor()
 void getRandomStart()
 {
     // Selecting start point
-    do 
+    do
     {
         randomX = (rand() % (N / 21));
         randomY = (rand() % (N / 21));
-    }while(world_map[randomX][randomY] == 1);
+    } while (world_map[randomX][randomY] == 1);
 }
 
 bool checkLeft(int x, int y)
