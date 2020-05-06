@@ -71,7 +71,7 @@ int main()
 #pragma omp parallel private(thread_num) shared(PixelWidth, PixelHeight, ER2, color) num_threads(thread_count)
     {
         thread_num = omp_get_thread_num();
-#pragma omp for private(iY, iX, Iteration, Cy, Cx, Zx, Zy, Zx2, Zy2) schedule(guided, chunk)
+#pragma omp for private(iY, iX, Iteration, Cy, Cx, Zx, Zy, Zx2, Zy2) schedule(guided, chunk) // schedule(x, chunk) -> x: static or dynamic or guided
         for (iY = 0; iY < iYmax; iY++)
         {
             Cy = CyMin + iY * PixelHeight;
