@@ -25,6 +25,7 @@
 #include <omp.h>
 
 #define thread_count 4
+const int chunk = 256;
 
 using namespace std;
 
@@ -52,7 +53,8 @@ const int IterationMax = 2000;
 const double EscapeRadius = 2;
 double ER2 = EscapeRadius * EscapeRadius;
 
-double start, end_stop;
+double Cx, Cy, Zx, Zy, Zx2, Zy2, start, end_stop;
+int iX, iY, Iteration, k, thread_num;
 
 int main()
 {
@@ -61,12 +63,11 @@ int main()
 
     start = omp_get_wtime();
 
-#pragma omp parallel num_threads(thread_count)
+#pragma omp parallel private(thread_num) shared(PixelWidth, PixelHeight, ER2, color) num_threads(thread_count)
     {
-        double Cx, Cy, Zx, Zy, Zx2, Zy2;
-        int iX, iY, Iteration, k;
-
-        for (iY = omp_get_thread_num() * (iYmax / thread_count); iY < (omp_get_thread_num() + 1) * (iYmax / thread_count); iY++)
+        thread_num = omp_get_thread_num();
+#pragma omp for private(iY, iX, Iteration, Cy, Cx, Zx, Zy, Zx2, Zy2) schedule(guided, chunk)
+        for (iY = 0; iY < iYmax; iY++)
         {
             Cy = CyMin + iY * PixelHeight;
             if (fabs(Cy) < PixelHeight / 2)
@@ -90,12 +91,17 @@ int main()
                 }
 
                 /* compute  pixel color (24 bit = 3 bytes) */
-                for (k = 0; k < 3; k++)
-                {
-                    if (Iteration == IterationMax)
-                        color[iX][iY][k] = (omp_get_thread_num() * 255) / (thread_count - 1);
-                    else
-                        color[iX][iY][k] = 255 - (omp_get_thread_num() * 255) / (thread_count - 1);
+                if (Iteration == IterationMax)
+                { /*  interior of Mandelbrot set = black */
+                    color[iY][iX][0] = 0;
+                    color[iY][iX][1] = 0;
+                    color[iY][iX][2] = 0;
+                }
+                else
+                { /* exterior of Mandelbrot set = white */
+                    color[iY][iX][0] = (sin(thread_num % 3) / 2.0 + 0.5) * 255;
+                    color[iY][iX][1] = (sin(thread_num % 5) / 2.0 + 0.5) * 255;
+                    color[iY][iX][2] = (sin(thread_num % 7) / 2.0 + 0.5) * 255;
                 }
             }
         }
