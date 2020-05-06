@@ -43,7 +43,7 @@ double PixelHeight = (CyMax - CyMin) / iYmax;
 const int MaxColorComponentValue = 255;
 
 FILE *fp;
-char const *filename = "mandelbrot.ppm";
+char const *filename = "result.ppm";
 char const *comment = "# ";
 
 static unsigned char color[iXmax][iYmax][3];
@@ -54,7 +54,8 @@ const double EscapeRadius = 2;
 double ER2 = EscapeRadius * EscapeRadius;
 
 double Cx, Cy, Zx, Zy, Zx2, Zy2, start, end_stop;
-int iX, iY, Iteration, k, thread_num;
+int i, j, k;
+int iX, iY, Iteration, thread_num;
 
 int main()
 {
@@ -62,6 +63,10 @@ int main()
     fprintf(fp, "P6\n %s\n %d\n %d\n %d\n", comment, iXmax, iYmax, MaxColorComponentValue);
 
     start = omp_get_wtime();
+
+    int suma[thread_count];
+    for (i = 0; i < thread_count; i++)
+        suma[i] = 0;
 
 #pragma omp parallel private(thread_num) shared(PixelWidth, PixelHeight, ER2, color) num_threads(thread_count)
     {
@@ -90,6 +95,8 @@ int main()
                     Zy2 = Zy * Zy;
                 }
 
+                suma[thread_num] += Iteration; // iteration count added to threads matrix
+
                 /* compute  pixel color (24 bit = 3 bytes) */
                 if (Iteration == IterationMax)
                 { /*  interior of Mandelbrot set = black */
@@ -109,8 +116,12 @@ int main()
 
     end_stop = omp_get_wtime();
 
-    for (int i = 0; i < iYmax; i++)
-        for (int j = 0; j < iXmax; j++)
+    cout << "Number of iteration in thread: " << endl;
+    for (i = 0; i < thread_count; i++)
+        cout << i << ": " << suma[i] << endl;
+
+    for (i = 0; i < iYmax; i++)
+        for (j = 0; j < iXmax; j++)
             fwrite(color[i][j], 1, 3, fp);
 
     fclose(fp);
