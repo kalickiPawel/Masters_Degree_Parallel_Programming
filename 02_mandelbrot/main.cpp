@@ -1,6 +1,7 @@
 //
 //  main.cpp
-//  Lab02_mandelbrot
+//  Laboratory exercise no. 02
+//  Mandelbrot set C++ 11 Threads
 //
 //  Created by Paweł Kalicki on 26/03/2020.
 //  Copyright © 2020 Paweł Kalicki. All rights reserved.
