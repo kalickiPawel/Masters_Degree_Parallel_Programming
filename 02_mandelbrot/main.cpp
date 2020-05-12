@@ -42,7 +42,7 @@ double PixelHeight = (CyMax - CyMin) / iYmax;
 const int MaxColorComponentValue = 255;
 
 FILE *fp;
-char const *filename = "new1.ppm";
+char const *filename = "result.ppm";
 char const *comment = "# ";
 
 static unsigned char color[iXmax][iYmax][3];
