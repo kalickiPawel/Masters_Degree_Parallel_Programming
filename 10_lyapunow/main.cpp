@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <tbb/tbb.h>
 
 using namespace std;
 
@@ -77,38 +78,50 @@ public:
 
         std::cout << "\n";
 
-        for (w = 0; w < RozY; w++)
-        {
-            for (k = 0; k < RozX; k++)
-            {
-                tmpLap = ValLap(Seed, NoIter, rx, ry);
+        tbb::parallel_for(tbb::blocked_range2d<size_t>(0, RozY, 16, 0, RozX, 32), [=](const tbb::blocked_range2d<size_t> &r) {
+            float rx, ry, tmpLap = 0;
+            double z;
+            char tmp;
 
-                //std::cout << (int)tmpLap;
-                if (tmpLap <= 0)
+            float rxInit = MinR;
+            float ryInit = MaxX - (start - 1) * deltaY;
+            rx = rxInit;
+            ry = ryInit;
+
+            for (size_t w = r.rows().begin(); w != r.rows().end(); w++)
+            {
+                for (size_t k = r.cols().begin(); k != r.cols().end(); k++)
                 {
-                    z = noColors * tmpLap / LapMin;
-                    tmp = (int)(z) % noColors;
-                    pixels[k][w][0] = tmp;
-                    pixels[k][w][1] = tmp;
-                    pixels[k][w][2] = tmp;
+                    rx = rxInit + deltaX * k;
+                    ry = ryInit - deltaY * w;
+                    tmpLap = ValLap(Seed, NoIter, rx, ry);
+
+                    //std::cout << (int)tmpLap;
+                    if (tmpLap <= 0)
+                    {
+                        z = noColors * tmpLap / LapMin;
+                        tmp = (int)(z) % noColors;
+                        pixels[k][w][0] = tmp;
+                        pixels[k][w][1] = tmp;
+                        pixels[k][w][2] = tmp;
+                    }
+                    else
+                    {
+                        pixels[k][w][0] = 0;
+                        pixels[k][w][1] = 0;
+                        pixels[k][w][2] = 0;
+                    }
+                    rx = rx + deltaX;
                 }
-                else
-                {
-                    pixels[k][w][0] = 0;
-                    pixels[k][w][1] = 0;
-                    pixels[k][w][2] = 0;
-                }
-                rx = rx + deltaX;
+                rx = MinR;
+                ry = ry - deltaY;
             }
-            rx = MinR;
-            ry = ry - deltaY;
-        }
+        });
         //return pixels;
     }
 
     float ValLap(float Seed, int NoIter, float rx, float ry)
     {
-
         float x, sumlap, elem, ValLap;
         int i, poz, NoElem;
         float R;
@@ -189,8 +202,8 @@ int main()
 
     FILE *fp;
     int i, j;
-    char *filename = "new1.ppm";
-    char *comment = "# "; /* comment should start with # */
+    char const *filename = "new1.ppm";
+    char const *comment = "# "; /* comment should start with # */
     const int MaxColorComponentValue = 255;
     int a;
     Lapunov lp;
@@ -199,7 +212,15 @@ int main()
 
     fprintf(fp, "P6\n %s\n %d\n %d\n %d\n", comment, size, size, MaxColorComponentValue);
 
+    tbb::tick_count s1, e1;
+    int nThreads = 2;
+    tbb::task_scheduler_init init(nThreads);
+    s1 = tbb::tick_count::now();
+
     lp.Draw(5, 100, size, size, 0, size, -3, 9, -5, 2, 2477, 1);
+
+    e1 = tbb::tick_count::now();
+    cout << (e1 - s1).seconds() << endl;
 
     fwrite(pixels, 1, 3 * size * size, fp);
 
