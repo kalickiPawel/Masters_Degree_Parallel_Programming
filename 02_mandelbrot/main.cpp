@@ -109,7 +109,10 @@ int main()
     for (int i = 0; i < thread_count; i++)
         magazynWatkow[i].join();
 
-    fwrite(color, 1, 3, fp);
+    for (int i = 0; i < iXmax; ++i)
+        for (int j = 0; j < iYmax; ++j)
+            fwrite(color[j][i], 1, 3, fp);
+
     fclose(fp);
 
     cout << "elapsed time mandelbrot set: " << elapsed_seconds.count() << '\n';
