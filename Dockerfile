@@ -23,7 +23,7 @@ WORKDIR /parallel_programming/
 # RUN g++ -o main ./01_matrix/main.cpp -pthread -O3
 # RUN g++ -o main ./02_mandelbrot/main.cpp -pthread -O3
 # RUN g++ -o main ./09_tbb/main.cpp -ltbb
-RUN g++ -o main ./10_lyapunow/lap.cpp -ltbb
+RUN g++ -o main ./10_lyapunow/main.cpp -ltbb
 
 # Run the output program from the previous step
 CMD ["./main"]
