@@ -1,3 +1,22 @@
+//
+//  main.cpp
+//  Laboratory exercise no. 09
+//  Image filtering C++ 11 Intel TBB
+//
+//  Created by Paweł Kalicki on 11/05/2020.
+//  Copyright © 2020 Paweł Kalicki. All rights reserved.
+//
+//  -------------------------------
+//  1. technique of creating ppm file is  based on the code of Claudio Rocchini
+//  http://en.wikipedia.org/wiki/Image:Color_complex_plot.jpg
+//  create 24 bit color graphic file ,  portable pixmap file = PPM
+//  see http://en.wikipedia.org/wiki/Portable_pixmap
+//  to see the file use external application ( graphic viewer)
+//  -------------------------------
+//  2. image filtering algorithms is  based on the code of Tomasz Lubinski
+//  http://www.algorytm.org/przetwarzanie-obrazow/filtrowanie-obrazow.html
+//
+
 #include <iostream>
 #include <fstream>
 #include <tbb/tbb.h>
