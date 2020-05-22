@@ -1,3 +1,20 @@
+//
+//  main.cpp
+//  Laboratory exercise no. 10
+//  Lyapunow fractal C++ 11 Intel TBB
+//
+//  Created by Paweł Kalicki on 14/05/2020.
+//  Copyright © 2020 Paweł Kalicki. All rights reserved.
+//
+//  -------------------------------
+//  1. technique of creating ppm file is  based on the code of Claudio Rocchini
+//  http://en.wikipedia.org/wiki/Image:Color_complex_plot.jpg
+//  create 24 bit color graphic file ,  portable pixmap file = PPM
+//  see http://en.wikipedia.org/wiki/Portable_pixmap
+//  to see the file use external application ( graphic viewer)
+//  -------------------------------
+//
+
 #include <iostream>
 #include <cmath>
 #include <tbb/tbb.h>
@@ -202,7 +219,7 @@ int main()
 
     FILE *fp;
     int i, j;
-    char const *filename = "new1.ppm";
+    char const *filename = "Lyapunow.ppm";
     char const *comment = "# "; /* comment should start with # */
     const int MaxColorComponentValue = 255;
     int a;
